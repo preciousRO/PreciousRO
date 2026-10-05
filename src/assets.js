@@ -7,8 +7,17 @@ export const url = (p) => new URL(p, BASE).href;
 
 const loader = new GLTFLoader();
 const cache = new Map();
+// Packed builds (VITE_ASSET_PACK=1) ship the models inside JSON files as base64, for hosts that only serve data types.
+const PACKED = import.meta.env.VITE_ASSET_PACK === '1';
+const packs = new Map();
+function packFor(path) { const cat = path.split('/')[0]; if (!packs.has(cat)) packs.set(cat, loadJSON(`data/${cat}.json`)); return packs.get(cat); }
+function b64ToBuffer(b64) { const bin = atob(b64); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return u8.buffer; }
 export function loadGLTF(path) {
-  if (!cache.has(path)) cache.set(path, loader.loadAsync(url(path)));
+  if (!cache.has(path)) {
+    cache.set(path, PACKED
+      ? packFor(path).then((pack) => { const b64 = pack[path]; if (!b64) throw new Error('Missing packed asset ' + path); return new Promise((res, rej) => loader.parse(b64ToBuffer(b64), '', res, rej)); })
+      : loader.loadAsync(url(path)));
+  }
   return cache.get(path);
 }
 export async function loadJSON(path) {
