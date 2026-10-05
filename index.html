@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Bwari Life</title>
+<meta name="description" content="A 3D life simulation of one Bar Part II session at the Nigerian Law School, Bwari Campus. Create your aspirant, walk the campus, meet real people.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="labels"></div>
+
+<div id="loading" class="screen on"><div class="loadbox"><div class="tag">Nigerian Law School · Bwari Campus · Abuja</div><h1>Bwari Life</h1><div class="bar"><i id="loadbar"></i></div><p id="loadmsg">Loading the campus…</p></div></div>
+
+<section id="s-intro" class="screen">
+  <div class="hero">
+    <div class="tag">Nigerian Law School · Bwari Campus · Abuja</div>
+    <h1>Bwari Life</h1>
+    <p>Create your aspirant, walk into the Bwari campus and survive one full Bar Part II session: 9am lectures, three dinners, externship, portfolio, Bar Finals and the Call to Bar. Real people are on the same campus. Talk to them.</p>
+    <div class="row"><button class="primary" id="btn-new">Create my aspirant</button><button class="ghost" id="btn-load" hidden>Continue saved game</button></div>
+    <div class="hint">Move with WASD or tap the ground · drag to look around · E or tap to interact · Enter to chat</div>
+  </div>
+</section>
+
+<section id="s-create" class="screen">
+  <div class="creator">
+    <h2>Create your aspirant</h2>
+    <div class="opts" id="creator"></div>
+    <div class="row sticky"><button class="primary" id="btn-start">Resume at Bwari</button><button class="ghost" id="btn-back">Back</button></div>
+  </div>
+</section>
+
+<section id="s-game" class="screen">
+  <div class="topbar">
+    <div class="clock">Week <b id="t-week">1</b>/20 · <b id="t-day">Mon</b> <b id="t-time">07:00</b></div>
+    <div class="phase" id="t-phase">Orientation</div>
+    <div class="money">₦<span id="t-money">0</span></div>
+    <div class="online" id="t-online" title="People on campus right now">● 1</div>
+    <div class="row"><button class="ghost small" id="btn-needs">Needs</button><button class="ghost small" id="btn-menu">Menu</button></div>
+  </div>
+  <div class="panel" id="panel">
+    <div class="who"><h3 id="g-name"></h3><small id="g-sub"></small></div>
+    <div class="needs" id="g-needs"></div>
+    <div class="lbl">Knowledge</div><div class="courses" id="g-courses"></div>
+    <div class="lbl">Bag</div><div class="inv" id="g-inv"></div>
+    <div class="lbl">Records</div><div id="g-rec" class="rec"></div>
+    <div class="lbl">Log</div><div class="log" id="g-log"></div>
+  </div>
+  <div class="prompt" id="prompt" hidden></div>
+  <div class="chat" id="chat">
+    <div class="chatlog" id="chatlog"></div>
+    <form id="chatform" autocomplete="off"><input id="chatinput" maxlength="140" placeholder="Say something to everyone on campus…"><button type="submit" class="primary small">Send</button></form>
+    <div class="emotes"><button data-emote="dance">💃 Dance</button><button data-emote="emote1">👋 Wave</button><button data-emote="emote2">😄 Emote</button><button data-emote="emote3">🤷 Emote</button><button id="btn-mic" class="mic">🎤 Voice off</button></div>
+  </div>
+  <div class="joy" id="joy"><div class="knob" id="knob"></div></div>
+  <button class="runbtn" id="btn-run">🏃</button>
+  <button class="actbtn" id="btn-act" hidden>Interact</button>
+</section>
+
+<section id="s-end" class="screen"><div class="result" id="end-box"></div></section>
+
+<div class="sheet" id="sheet"><div class="in" id="sheet-in"></div></div>
+<div class="toast" id="toast"></div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>

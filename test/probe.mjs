@@ -1,0 +1,20 @@
+import { chromium } from 'playwright';
+import { spawn } from 'node:child_process';
+const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
+const server = spawn('npx', ['vite', 'preview', '--port', '4173', '--strictPort'], { stdio: 'pipe' });
+server.stdout.on('data', (d) => log('[vite]', String(d).trim())); server.stderr.on('data', (d) => log('[vite err]', String(d).trim()));
+await new Promise((r) => setTimeout(r, 3000));
+log('launching');
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', timeout: 60000, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--no-sandbox', '--disable-dev-shm-usage'] });
+log('launched');
+const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+await ctx.route('**/*', (route) => { const u = route.request().url(); if (u.startsWith('http://localhost:4173')) route.continue(); else route.abort(); });
+const p = await ctx.newPage();
+p.on('console', (m) => log('[console.' + m.type() + ']', m.text().slice(0, 400)));
+p.on('pageerror', (e) => log('[pageerror]', e.message));
+p.on('requestfailed', (r) => log('[reqfail]', r.url().slice(0, 100), r.failure()?.errorText));
+log('goto'); await p.goto('http://localhost:4173/', { waitUntil: 'domcontentloaded', timeout: 60000 }); log('loaded dom');
+for (let i = 0; i < 12; i++) { await p.waitForTimeout(5000); const s = await p.evaluate(() => ({ msg: document.getElementById('loadmsg')?.textContent, bar: document.getElementById('loadbar')?.style.width, intro: document.querySelector('#s-intro.on') != null, gl: !!document.createElement('canvas').getContext('webgl2') })); log('tick', JSON.stringify(s)); if (s.intro) break; }
+await p.screenshot({ path: '/tmp/claude-0/-home-user/8ce74c45-19d8-5146-9bdd-2efda729f259/scratchpad/shots/probe.png' });
+log('shot saved');
+await browser.close(); server.kill(); process.exit(0);

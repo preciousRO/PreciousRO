@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+import { spawn } from 'node:child_process';
+const server = spawn('npx', ['vite', 'preview', '--port', '4173', '--strictPort'], { stdio: 'pipe' });
+await new Promise((r) => setTimeout(r, 2500));
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox'] });
+const ctx = await browser.newContext({ viewport: { width: 900, height: 600 } });
+await ctx.route('**/*', (r) => (r.request().url().startsWith('http://localhost:4173') ? r.continue() : r.abort()));
+const p = await ctx.newPage();
+await p.goto('http://localhost:4173/', { waitUntil: 'domcontentloaded' });
+await p.waitForSelector('#s-intro.on', { timeout: 120000 }); await p.waitForTimeout(1500);
+const res = await p.evaluate(() => [...document.querySelectorAll('#labels > *')].map((e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return [e.className, e.textContent.slice(0, 12), Math.round(r.left), Math.round(r.top), Math.round(r.width), Math.round(r.height), cs.position, cs.display, e.style.transform.slice(0, 60)]; }));
+console.log(JSON.stringify(res, null, 0));
+await browser.close(); server.kill(); process.exit(0);
