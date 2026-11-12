@@ -6,7 +6,7 @@ An interactive ivory, gold and black envelope invitation for the introduction ce
 
 * `index.html` the whole invitation (envelope, animation, music control, WhatsApp share)
 * `music/ire-instrumental.mp3` put the Iré (Adekunle Gold) instrumental here
-* `og-image.jpg` preview picture shown when the link is shared on WhatsApp
+* `assets/og-image.jpg` preview picture shown when the link is shared on WhatsApp
 
 ## Adding the music
 
