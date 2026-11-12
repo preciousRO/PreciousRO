@@ -47,7 +47,7 @@ canvas#fx{position:fixed;inset:0;z-index:70;pointer-events:none}
 .bottom-flap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.25),rgba(255,255,255,0) 30%)}
 .env-text{position:absolute;left:0;right:0;bottom:calc(7% + env(safe-area-inset-bottom));text-align:center;z-index:3;padding:0 20px}
 .env-text .kick{font-family:var(--caps);font-size:clamp(.62rem,2.6vw,.74rem);letter-spacing:.38em;padding-left:.38em;color:var(--ink-soft)}
-.env-text .names{font-family:var(--script);font-size:clamp(2.1rem,10vw,3rem);line-height:1.15;margin:6px 0 4px;color:var(--ink)}
+.env-text .names{font-family:var(--script);font-size:clamp(1.9rem,8.6vw,2.7rem);line-height:1.15;margin:6px 0 4px;color:var(--ink)}
 .env-text .when{font-family:var(--caps);font-size:clamp(.62rem,2.5vw,.72rem);letter-spacing:.34em;padding-left:.34em;color:var(--ink-soft)}
 .env-text .tap{margin-top:22px;font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,4.4vw,1.2rem);color:var(--ink-soft);
   display:inline-flex;align-items:center;gap:10px;animation:breathe 2.6s ease-in-out infinite}
@@ -95,7 +95,7 @@ canvas#fx{position:fixed;inset:0;z-index:70;pointer-events:none}
 
 .crest{width:150px;height:150px;margin-bottom:22px}
 .eyebrow{font-family:var(--caps);font-weight:500;font-size:clamp(.72rem,3vw,.86rem);letter-spacing:.3em;padding-left:.3em;line-height:1.9;color:var(--ink)}
-.display{font-family:var(--serif);font-weight:500;font-size:clamp(3.3rem,16vw,5.2rem);line-height:.95;letter-spacing:-.01em;color:var(--ink);margin:26px 0 0}
+.display{font-family:var(--serif);font-weight:500;font-size:clamp(2.7rem,13vw,4.6rem);line-height:.95;letter-spacing:-.01em;color:var(--ink);margin:26px 0 0}
 .display .amp{display:block;font-family:var(--script);font-weight:400;font-size:.62em;line-height:1.1;color:var(--gold);margin:4px 0}
 .rule{display:flex;align-items:center;justify-content:center;gap:16px;width:100%;max-width:340px;margin:26px auto}
 .rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(176,138,70,0),var(--gold))}
@@ -176,3 +176,7 @@ canvas#fx{position:fixed;inset:0;z-index:70;pointer-events:none}
 .lead.plain{font-style:normal}
 .wash{position:fixed;inset:0;z-index:1;pointer-events:none;background:rgba(245,239,226,.62)}
 .time{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,5.4vw,1.6rem);margin-top:6px;color:var(--ink)}
+
+.names-caps .amp{display:block;line-height:1.1;margin:2px 0}
+.names-caps{font-size:clamp(1.35rem,6.2vw,2.2rem)}
+.nw{white-space:nowrap}

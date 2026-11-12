@@ -32,7 +32,7 @@
     }
     if (mono){
       const t = add('text', { x: c, y: c + 15, 'text-anchor': 'middle', 'font-family': 'Great Vibes, cursive', 'font-size': 46, fill: 'url(#foil)' });
-      t.textContent = 'P&K';
+      t.textContent = 'C&P';
     } else {
       add('path', { d: `M${c} ${c + 14}s-13-8-13-17a7 7 0 0 1 13-4 7 7 0 0 1 13 4c0 9-13 17-13 17z`, fill: 'url(#foil)' });
     }
@@ -168,9 +168,9 @@
 
   /* ---------- calendar ---------- */
   const place = 'No. 4 Joshua Madaki Close, Apo Zone E, Abuja';
-  const title = 'Precious & Kristopher · Introduction Ceremony';
+  const title = 'Chukwuemeke & Precious · Introduction Ceremony';
   $('#gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title) +
-    '&dates=20261129T160000Z/20261129T190000Z&location=' + encodeURIComponent(place) + '&details=' + encodeURIComponent('With love, Precious & Kristopher');
+    '&dates=20261129T160000Z/20261129T190000Z&location=' + encodeURIComponent(place) + '&details=' + encodeURIComponent('With love, Chukwuemeke & Precious');
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PK//Invitation//EN', 'BEGIN:VEVENT', 'UID:pk-introduction-20261129',
     'DTSTAMP:20261112T000000Z', 'DTSTART:20261129T160000Z', 'DTEND:20261129T190000Z', 'SUMMARY:' + title,
     'LOCATION:' + place.replace(/,/g, '\\,'), 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
