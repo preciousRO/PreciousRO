@@ -41,44 +41,34 @@
   crest($('#crest2'), false);
 
   /* ---------- music ---------- */
-  let ctx = null, gain = null, wired = false, playing = false;
-  const MAXV = 0.55;
-  function wire(){
-    if (wired) return; wired = true;
-    try {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      ctx = new AC();
-      const src = ctx.createMediaElementSource(audio);
-      gain = ctx.createGain(); gain.gain.value = 0;
-      src.connect(gain).connect(ctx.destination);
-    } catch (e) { gain = null; }
-  }
+  let playing = false, fadeRaf = 0;
+  const MAXV = 0.6;
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
   function fade(to, secs){
-    if (gain && ctx){
-      const n = ctx.currentTime; gain.gain.cancelScheduledValues(n);
-      gain.gain.setValueAtTime(gain.gain.value, n); gain.gain.linearRampToValueAtTime(to, n + secs);
-    } else {
-      const from = audio.volume, t0 = performance.now();
-      const step = t => { const k = Math.min(1, (t - t0) / (secs * 1000)); try { audio.volume = from + (to - from) * k; } catch (e) {} if (k < 1) requestAnimationFrame(step); };
-      requestAnimationFrame(step);
-    }
+    cancelAnimationFrame(fadeRaf);
+    const from = audio.volume, t0 = performance.now();
+    const step = t => { const k = Math.min(1, (t - t0) / (secs * 1000)); try { audio.volume = from + (to - from) * k; } catch (e) {} if (k < 1) fadeRaf = requestAnimationFrame(step); };
+    fadeRaf = requestAnimationFrame(step);
+  }
+  function setPlaying(on){
+    playing = on;
+    music.classList.toggle('muted', !on);
+    music.setAttribute('aria-label', on ? 'Pause music' : 'Play music');
   }
   function play(){
-    wire();
-    if (ctx && ctx.state === 'suspended') ctx.resume();
-    if (gain) gain.gain.value = 0; else try { audio.volume = 0; } catch (e) {}
-    const p = audio.play();
-    const ok = () => { playing = true; music.classList.remove('muted'); music.setAttribute('aria-label', 'Pause music'); fade(MAXV, 4); };
-    if (p && p.then) p.then(ok).catch(() => {}); else ok();
+    try { audio.volume = 0.05; } catch (e) {}
+    let p;
+    try { p = audio.play(); } catch (e) { setPlaying(false); return; }
+    if (p && p.then) p.then(() => { setPlaying(true); fade(MAXV, 3.5); }).catch(() => setPlaying(false));
+    else { setPlaying(true); fade(MAXV, 3.5); }
   }
   function pause(){
-    playing = false; fade(0, .6);
-    setTimeout(() => { if (!playing) audio.pause(); }, 650);
-    music.classList.add('muted'); music.setAttribute('aria-label', 'Play music');
+    setPlaying(false); fade(0.02, .5);
+    setTimeout(() => { if (!playing) audio.pause(); }, 550);
   }
   music.addEventListener('click', () => playing ? pause() : play());
-  audio.addEventListener('error', () => music.style.display = 'none');
+  audio.addEventListener('pause', () => { if (playing && audio.paused) setPlaying(false); });
+  audio.load();
 
   /* ---------- gold sparkles ---------- */
   const cv = $('#fx'), g = cv.getContext('2d');
