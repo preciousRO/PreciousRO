@@ -183,7 +183,4 @@
   const map = $('#map');
   map.querySelector('.cover').addEventListener('click', () => map.classList.add('active'));
 
-  /* ---------- share ---------- */
-  const url = location.href.split('#')[0];
-  $('#share').href = 'https://wa.me/?text=' + encodeURIComponent('You have a special invitation from Precious & Kristopher ♡ Tap to open: ' + url);
 })();
