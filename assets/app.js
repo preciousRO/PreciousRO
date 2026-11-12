@@ -154,7 +154,7 @@
   });
 
   /* ---------- countdown ---------- */
-  const target = new Date('2026-11-29T00:00:00+01:00').getTime();
+  const target = new Date('2026-11-29T17:00:00+01:00').getTime();
   const cells = {}; document.querySelectorAll('#count b').forEach(b => cells[b.dataset.k] = b);
   const pad = n => String(n).padStart(2, '0');
   function count(){
@@ -170,9 +170,9 @@
   const place = 'No. 4 Joshua Madaki Close, Apo Zone E, Abuja';
   const title = 'Precious & Kristopher · Introduction Ceremony';
   $('#gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title) +
-    '&dates=20261129/20261130&location=' + encodeURIComponent(place) + '&details=' + encodeURIComponent('With love, Precious & Kristopher');
+    '&dates=20261129T160000Z/20261129T190000Z&location=' + encodeURIComponent(place) + '&details=' + encodeURIComponent('With love, Precious & Kristopher');
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//PK//Invitation//EN', 'BEGIN:VEVENT', 'UID:pk-introduction-20261129',
-    'DTSTAMP:20261112T000000Z', 'DTSTART;VALUE=DATE:20261129', 'DTEND;VALUE=DATE:20261130', 'SUMMARY:' + title,
+    'DTSTAMP:20261112T000000Z', 'DTSTART:20261129T160000Z', 'DTEND:20261129T190000Z', 'SUMMARY:' + title,
     'LOCATION:' + place.replace(/,/g, '\\,'), 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   $('#ical').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
   const cal = $('#cal'), calBtn = $('#calBtn');
