@@ -31,8 +31,9 @@ canvas#fx{position:fixed;inset:0;z-index:70;pointer-events:none}
   background:#e9e0cb;}
 .env.sliding{background:transparent;transition:background .4s}
 .env-frame{position:relative;width:var(--ew);height:100svh;perspective:1800px;
-  transition:transform 1.5s cubic-bezier(.6,0,.35,1);will-change:transform}
-.env.sliding .env-frame{transform:translateY(108%)}
+  transition:transform 1.5s cubic-bezier(.6,0,.35,1),opacity 1s ease .3s;will-change:transform,opacity}
+.env.sliding .env-frame{transform:translateY(120%);opacity:0}
+.env.sliding{pointer-events:none}
 .env.gone{display:none}
 .paper{background:var(--paper) url(paper.jpg) center/240px 300px repeat}
 .env-body{position:absolute;inset:0;box-shadow:0 0 40px rgba(60,45,20,.18)}
@@ -64,6 +65,7 @@ canvas#fx{position:fixed;inset:0;z-index:70;pointer-events:none}
 .liner::after{content:"";position:absolute;inset:0;background:linear-gradient(160deg,rgba(201,164,92,.28),rgba(176,138,70,.12) 50%,rgba(120,90,40,.2))}
 .env.open .flap-wrap{transform:rotateX(178deg)}
 .env.flat .flap-wrap{z-index:0}
+.env.sliding .flap-wrap{opacity:0;transition:opacity .5s ease}
 
 .seal{position:absolute;left:50%;top:56%;z-index:6;width:calc(var(--ew) * .36);max-width:170px;aspect-ratio:1;
   transform:translate(-50%,-50%);cursor:pointer;border:0;background:none;padding:0;-webkit-tap-highlight-color:transparent}

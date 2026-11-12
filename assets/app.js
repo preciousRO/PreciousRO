@@ -67,6 +67,16 @@
     setTimeout(() => { if (!playing) audio.pause(); }, 550);
   }
   music.addEventListener('click', () => playing ? pause() : play());
+  const SOURCES = [
+    'https://cdn.jsdelivr.net/gh/preciousRO/PreciousRO@180e92f21aa7e1741441ec992216343080ded5f8/music/ire-instrumental.mp3',
+    'https://preciousro.github.io/PreciousRO/music/ire-instrumental.mp3',
+    'music/ire-instrumental.mp3'
+  ];
+  let srcIdx = 0;
+  audio.src = SOURCES[0];
+  audio.addEventListener('error', () => {
+    if (srcIdx < SOURCES.length - 1){ srcIdx++; audio.src = SOURCES[srcIdx]; audio.load(); if (playing || opened) play(); }
+  });
   audio.addEventListener('pause', () => { if (playing && audio.paused) setPlaying(false); });
   audio.load();
 
